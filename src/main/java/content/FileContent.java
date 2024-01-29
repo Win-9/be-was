@@ -26,7 +26,6 @@ public enum FileContent {
     }
 
     public String getText(int index, String id, String name, String email) {
-        System.out.println("here");
         return String.format(text, index, id, name, email);
     }
 }
