@@ -1,7 +1,6 @@
 package util;
 
-import ch.qos.logback.core.util.FileUtil;
-import content.FileContent;
+import content.UserContent;
 import dto.ResourceDto;
 import exception.SourceException;
 import model.Model;
@@ -38,7 +37,7 @@ public class ResourceHandler {
             for (int i = 3; i < userList.size() + 3; i++) {
                 User user = userList.get(i - 3);
                 bodyString = bodyString.replace("{{data}}",
-                        FileContent.USER_LIST.getText(i, user.getUserId(), user.getName(), user.getEmail()));
+                        UserContent.USER_LIST.getText(i, user.getUserId(), user.getName(), user.getEmail()));
                 System.out.println("ttt");
             }
         }
@@ -49,10 +48,10 @@ public class ResourceHandler {
         String bodyString = new String(bodyData);
         if (resource.isIsloggined()) {
             bodyString = bodyString.replace("{{menu}}",
-                    FileContent.LOGIN.getText(String.valueOf(Model.getAttribute("username").get())));
+                    UserContent.LOGIN.getText(String.valueOf(Model.getAttribute("username").get())));
         } else {
             bodyString = bodyString.replace("{{menu}}",
-                    FileContent.NON_LOGIN.getText());
+                    UserContent.NON_LOGIN.getText());
         }
         return bodyString;
     }

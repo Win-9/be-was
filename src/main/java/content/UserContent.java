@@ -1,8 +1,6 @@
 package content;
 
-import model.Model;
-
-public enum FileContent {
+public enum UserContent {
     NON_LOGIN("<li><a href=\"../user/form.html\" role=\"button\">회원가입</a></li>\n" +
             "<li><a href=\"../user/login.html\" role=\"button\">로그인</a></li>"),
     LOGIN("<li><a href=\"#\" role=\"button\">로그아웃</a></li>\n" +
@@ -13,7 +11,7 @@ public enum FileContent {
             "<td>%s</td> <td>%s</td> <td>%s</td><td><a href=\"#\" class=\"btn btn-success\" role=\"button\">수정</a></td>\n" +
             "</tr>");
     private String text;
-    FileContent (String text) {
+    UserContent(String text) {
         this.text = text;
     }
 
