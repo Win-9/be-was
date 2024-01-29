@@ -21,6 +21,7 @@ public class UserController {
         methodMap.put("/index.html", this::process);
         methodMap.put("/user/form.html", this::process);
         methodMap.put("/user/login.html", this::process);
+        methodMap.put("/write.html", this::process);
         methodMap.put("/user/login", this::loginUserResource);
         methodMap.put("/user/login_failed.html", this::process);
     }

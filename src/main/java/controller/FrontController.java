@@ -23,6 +23,7 @@ public class FrontController {
         controllerMap.put("/user/login.html", new UserController());
         controllerMap.put("/user/login", new UserController());
         controllerMap.put("/user/list", new UserController());
+        controllerMap.put("/write.html", new UserController());
     }
 
     public static CommonResponse service(HttpRequest httpRequest) throws IOException {
