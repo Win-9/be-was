@@ -2,6 +2,7 @@ package service;
 
 import db.Database;
 import exception.SourceException;
+import model.Board;
 import util.ParseParams;
 import model.User;
 import org.slf4j.Logger;
@@ -46,12 +47,30 @@ public class UserService {
     }
 
     public User findUserWithSession(String session) {
+        session = parseCookie(session);
         Session findSession = Database.getSession(session);
         String userId = findSession.getUserId();
         return Database.findUserById(userId);
     }
 
+    private String parseCookie(String session) {
+        if (session.contains("=")) {
+            session = session.split("=")[1];
+        }
+        return session;
+    }
+
     public List<User> findAllUser() {
         return Database.findAll().stream().toList();
+    }
+
+    public void createBoard(User user, ParseParams bodyData) {
+        Map<String, String> data = bodyData.getParamMap();
+        Board board = new Board();
+        for (String key: data.keySet()) {
+            Board.setBoard(board, key, data.get(key));
+        }
+        Database.addBoard(board);
+        user.addBoard(board);
     }
 }
