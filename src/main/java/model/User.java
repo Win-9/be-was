@@ -3,6 +3,8 @@ package model;
 import webserver.RequestHeader;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User {
 
@@ -10,6 +12,8 @@ public class User {
     private String password;
     private String name;
     private String email;
+
+    private List<Board> boardList = new ArrayList<>();
 
     public User() {
     }
@@ -48,8 +52,13 @@ public class User {
         return email;
     }
 
+
     @Override
     public String toString() {
         return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email=" + email + "]";
+    }
+
+    public void addBoard(Board board) {
+        this.boardList.add(board);
     }
 }

@@ -21,9 +21,26 @@ public class UserController {
         methodMap.put("/index.html", this::process);
         methodMap.put("/user/form.html", this::process);
         methodMap.put("/user/login.html", this::process);
-        methodMap.put("/write.html", this::process);
+        methodMap.put("/write.html", this::processBoard);
+        methodMap.put("/write", this::generateBoardResource);
         methodMap.put("/user/login", this::loginUserResource);
         methodMap.put("/user/login_failed.html", this::process);
+    }
+
+    public ResourceDto generateBoardResource(String session, Object bodyData) {
+        if (session == null) {
+            return ResourceDto.of("/user/login.html", 302, false);
+        }
+        User user = userService.findUserWithSession(session);
+        userService.createBoard(user, (ParseParams)bodyData);
+        return ResourceDto.of("/index.html", 302);
+    }
+
+    public ResourceDto processBoard(String session, Object path) {
+        if (session == null) {
+            return ResourceDto.of("/user/login.html", 302,false);
+        }
+        return ResourceDto.of((String) path);
     }
 
     public ResourceDto generateUserListResource(String session, Object path) {
@@ -40,7 +57,6 @@ public class UserController {
         if (sessionId == null) {
             return ResourceDto.of("/user/login_failed.html", 302, false);
         }
-
         User user = userService.findUserWithSession(sessionId);
         Model.addAttribute("sessionId", sessionId);
         Model.addAttribute("username", user.getName());
