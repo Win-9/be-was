@@ -11,7 +11,7 @@ public class PathHandler {
     public static ResourceDto responseResource(RequestHeader requestHeader, String body, UserController controller) {
         String method = requestHeader.getMethod();
         String path = requestHeader.getPath();
-        String cookie = requestHeader.getCookie();
+        String cookie = requestHeader.getCookie().split("=")[1];
 
 
         if (controller != null) {
