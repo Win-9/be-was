@@ -27,6 +27,16 @@ public class UserController implements Controller{
         methodMap.put("/user/login", this::loginUserResource);
         methodMap.put("/user/login_failed.html", this::process);
         methodMap.put("/user/profile.html", this::generateUserProfileResource);
+        methodMap.put("/user/logout", this::generateLogoutResource);
+    }
+
+    public ResourceDto generateLogoutResource(String session, Object path) {
+        if (session == null) {
+            return ResourceDto.of("/user/login.html", 302, false);
+        }
+        userService.removeSession(session);
+        Model.removeAttribute("sessionId");
+        return ResourceDto.of("/index.html", 302,false);
     }
 
     public ResourceDto generateUserProfileResource(String session, Object path) {

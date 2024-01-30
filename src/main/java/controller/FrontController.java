@@ -25,6 +25,7 @@ public class FrontController {
         controllerMap.put("/user/login", new UserController());
         controllerMap.put("/user/list", new UserController());
         controllerMap.put("/user/profile.html", new UserController());
+        controllerMap.put("/user/logout", new UserController());
 
         // BoardController 매핑
         controllerMap.put("/write.html", new BoardController());

@@ -12,6 +12,10 @@ public class Model {
         modelMap.put(name, object);
     }
 
+    public static void removeAttribute(String name) {
+        modelMap.remove(name);
+    }
+
     public static Optional<Object> getAttribute(String name) {
         return Optional.ofNullable(modelMap.get(name));
     }

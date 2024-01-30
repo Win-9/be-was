@@ -62,4 +62,9 @@ public class UserService {
     public List<User> findAllUser() {
         return Database.findAll().stream().toList();
     }
+
+    public void removeSession(String session) {
+        session = parseCookie(session);
+        Database.deleteSession(session);
+    }
 }

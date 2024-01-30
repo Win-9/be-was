@@ -39,6 +39,10 @@ public class Database {
         return sessoinDB.get(sessionId);
     }
 
+    public static void deleteSession(String sessionId) {
+        sessoinDB.remove(sessionId);
+    }
+
     // Board
     public static void addBoard(Board board) {
         board.setBoardId(boardId);
