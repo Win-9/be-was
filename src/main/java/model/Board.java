@@ -2,6 +2,7 @@ package model;
 
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Board {
     private String writer;
@@ -10,6 +11,7 @@ public class Board {
     private LocalDateTime createTime;
 
     public Board() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         this.createTime = LocalDateTime.now();
     }
 
@@ -38,5 +40,10 @@ public class Board {
 
     public LocalDateTime getCreateTime() {
         return createTime;
+    }
+
+    public String getFormattedCreateTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return this.createTime.format(formatter);
     }
 }

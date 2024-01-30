@@ -1,8 +1,10 @@
 package util;
 
+import content.BoardContent;
 import content.UserContent;
 import dto.ResourceDto;
 import exception.SourceException;
+import model.Board;
 import model.Model;
 import model.User;
 
@@ -10,6 +12,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
 
 public class ResourceHandler {
@@ -26,8 +29,27 @@ public class ResourceHandler {
         // 로그인시의 뷰 수정
         String bodyString = changeMenuHtmlFile(resource, bodyData);
         bodyString = changeUserListHtmlFile(resource, bodyString);
+        bodyString = changeIndexHtmlFile(resource, bodyString);
 
         return bodyString.getBytes();
+    }
+
+    private static String changeIndexHtmlFile(ResourceDto resource, String bodyString) {
+        if (resource.getPath().contains("/index.html")) {
+            List<Board> boardList = (List<Board>) Model.getAttribute("boardList")
+                    .orElse(Collections.emptyList());
+
+            if (boardList.size() == 0) {
+                bodyString = bodyString.replace("{{boardData}}","");
+            } else {
+                for (Board board : boardList) {
+                    System.out.println("6");
+                    bodyString = bodyString.replace("{{boardData}}",
+                            BoardContent.BOARD.getText(board.getTitle(), board.getFormattedCreateTime(), board.getWriter()));
+                }
+            }
+        }
+        return bodyString;
     }
 
     private static String changeUserListHtmlFile(ResourceDto resource, String bodyString) {
@@ -38,7 +60,6 @@ public class ResourceHandler {
                 User user = userList.get(i - 3);
                 bodyString = bodyString.replace("{{data}}",
                         UserContent.USER_LIST.getText(i, user.getUserId(), user.getName(), user.getEmail()));
-                System.out.println("ttt");
             }
         }
         return bodyString;

@@ -26,7 +26,7 @@ public enum BoardContent {
         this.text = text;
     }
 
-    public String getText(String title, LocalDateTime time, String username) {
+    public String getText(String title, String time, String username) {
         return String.format(text, title, time, username);
     }
 
