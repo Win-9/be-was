@@ -27,66 +27,15 @@ public class ResourceHandler {
         }
 
         // 로그인시의 뷰 수정
-        String bodyString = changeMenuHtmlFile(resource, bodyData);
-        bodyString = changeUserListHtmlFile(resource, bodyString);
-        bodyString = changeIndexHtmlFile(resource, bodyString);
-        bodyString = changeShowHtmlFile(resource, bodyString);
+        String bodyString = HtmlBuilder.changeMenuHtmlFile(resource, bodyData);
+        bodyString = HtmlBuilder.changeUserListHtmlFile(resource, bodyString);
+        bodyString = HtmlBuilder.changeIndexHtmlFile(resource, bodyString);
+        bodyString = HtmlBuilder.changeShowHtmlFile(resource, bodyString);
 
         return bodyString.getBytes();
     }
 
-    private static String changeShowHtmlFile(ResourceDto resource, String bodyString) {
-        if (resource.getPath().contains("/qna/show")) {
-            Board board = (Board) Model.getAttribute("board").get();
-            bodyString = bodyString.replace("{{boardDetail}}",
-                    BoardContent.BOARD_DEFAIL.getText(board.getTitle(), board.getFormattedCreateTime(), board.getContents()));
-        }
-        return bodyString;
-    }
-
-    private static String changeIndexHtmlFile(ResourceDto resource, String bodyString) {
-        if (resource.getPath().contains("/index.html")) {
-            List<Board> boardList = (List<Board>) Model.getAttribute("boardList")
-                    .orElse(Collections.emptyList());
-
-            if (boardList.size() == 0) {
-                bodyString = bodyString.replace("{{boardData}}","");
-            } else {
-                for (Board board : boardList) {
-                    bodyString = bodyString.replace("{{boardData}}",
-                            BoardContent.BOARD.getText(board.getId(), board.getTitle(), board.getFormattedCreateTime(), board.getWriter()));
-                }
-            }
-        }
-        return bodyString;
-    }
-
-    private static String changeUserListHtmlFile(ResourceDto resource, String bodyString) {
-        if (resource.getPath().contains("/user/list")) {
-            List<User> userList = (List<User>) Model.getAttribute("userList").get();
-
-            for (int i = 3; i < userList.size() + 3; i++) {
-                User user = userList.get(i - 3);
-                bodyString = bodyString.replace("{{data}}",
-                        UserContent.USER_LIST.getText(i, user.getUserId(), user.getName(), user.getEmail()));
-            }
-        }
-        return bodyString;
-    }
-
-    private static String changeMenuHtmlFile(ResourceDto resource, byte[] bodyData) {
-        String bodyString = new String(bodyData);
-        if (resource.isIsloggined()) {
-            bodyString = bodyString.replace("{{menu}}",
-                    UserContent.LOGIN.getText(String.valueOf(Model.getAttribute("username").get())));
-        } else {
-            bodyString = bodyString.replace("{{menu}}",
-                    UserContent.NON_LOGIN.getText());
-        }
-        return bodyString;
-    }
-
-    private static byte[] changeFileToByte(FileInputStream fis, ByteArrayOutputStream bos) throws IOException {
+    public static byte[] changeFileToByte(FileInputStream fis, ByteArrayOutputStream bos) throws IOException {
         byte[] buffer = new byte[1024];
         int read;
         while ((read = fis.read(buffer)) != -1) {
