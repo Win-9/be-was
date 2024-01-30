@@ -1,6 +1,6 @@
 package exception;
 
-import model.CommonResponse;
+import response.CommonResponse;
 
 public class ExceptionHandler {
     public static CommonResponse handleGeneralException(SourceException e){

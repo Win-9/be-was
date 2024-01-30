@@ -1,19 +1,14 @@
-package util;
+package webserver;
 
-import content.BoardContent;
-import content.UserContent;
 import dto.ResourceDto;
 import exception.SourceException;
-import model.Board;
-import model.Model;
-import model.User;
+import util.ErrorCode;
+import util.HtmlBuilder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collections;
-import java.util.List;
 
 public class ResourceHandler {
 

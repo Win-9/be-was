@@ -3,9 +3,9 @@ package controller;
 import dto.ResourceDto;
 import exception.ExceptionHandler;
 import exception.SourceException;
-import model.CommonResponse;
+import response.CommonResponse;
 import request.HttpRequest;
-import util.ResourceHandler;
+import webserver.ResourceHandler;
 import webserver.PathHandler;
 import webserver.RequestHeader;
 
