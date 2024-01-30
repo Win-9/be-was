@@ -32,6 +32,9 @@ public class UserController {
     }
 
     public ResourceDto generateBoardDetailResource(String session, Object queryParams) {
+        if (session == null) {
+            return ResourceDto.of("/user/login.html", 302, false);
+        }
         Board board = boardService.findBoard((ParseParams) queryParams);
         Model.addAttribute("board", board);
         return ResourceDto.of("/qna/show.html");

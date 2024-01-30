@@ -7,9 +7,6 @@ import model.Board;
 import model.Model;
 import model.User;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,7 +24,6 @@ public class HtmlBuilder {
         if (resource.getPath().contains("/index.html")) {
             List<Board> boardList = (List<Board>) Model.getAttribute("boardList")
                     .orElse(Collections.emptyList());
-            System.out.println("size = " + boardList.size());
 
             if (boardList.size() == 0) {
                 bodyString = bodyString.replace("{{boardData}}","");
