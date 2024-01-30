@@ -1,5 +1,7 @@
 package content;
 
+import java.time.LocalDateTime;
+
 public enum BoardContent {
     BOARD("<li>\n" +
                   "  <div class=\"wrap\">\n" +
@@ -24,15 +26,8 @@ public enum BoardContent {
         this.text = text;
     }
 
-    public String getText() {
-        return text;
+    public String getText(String title, LocalDateTime time, String username) {
+        return String.format(text, title, time, username);
     }
 
-    public String getText(String username) {
-        return String.format(text, username);
-    }
-
-    public String getText(int index, String id, String name, String email) {
-        return String.format(text, index, id, name, email);
-    }
 }

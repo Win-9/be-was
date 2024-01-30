@@ -1,8 +1,10 @@
 package controller;
 
 import dto.ResourceDto;
+import model.Board;
 import model.Model;
 import model.User;
+import service.BoardService;
 import util.ParseParams;
 import service.UserService;
 
@@ -13,17 +15,19 @@ import java.util.function.BiFunction;
 
 public class UserController {
     private final UserService userService = new UserService();
+    private final BoardService boardService = new BoardService();
     private Map<String, BiFunction<String, Object, ResourceDto>> methodMap =  new HashMap<>();
 
     {
         methodMap.put("/user/create", this::generateUserResource);
         methodMap.put("/user/list.html", this::generateUserListResource);
-        methodMap.put("/index.html", this::process);
+        methodMap.put("/index.html", this::processIndexResource);
         methodMap.put("/user/form.html", this::process);
         methodMap.put("/user/login.html", this::process);
         methodMap.put("/write.html", this::processBoard);
         methodMap.put("/write", this::generateBoardResource);
         methodMap.put("/user/login", this::loginUserResource);
+        methodMap.put("/qna/show.html", this::process);
         methodMap.put("/user/login_failed.html", this::process);
     }
 
@@ -32,7 +36,7 @@ public class UserController {
             return ResourceDto.of("/user/login.html", 302, false);
         }
         User user = userService.findUserWithSession(session);
-        userService.createBoard(user, (ParseParams)bodyData);
+        boardService.createBoard(user, (ParseParams)bodyData);
         return ResourceDto.of("/index.html", 302);
     }
 
@@ -68,10 +72,20 @@ public class UserController {
         return ResourceDto.of("/index.html", 302, false);
     }
 
+    public ResourceDto processIndexResource(String session, Object path) {
+        List<Board> boardList = boardService.findAllBoard();
+        Model.addAttribute("boardList", boardList);
+        if (session == null) {
+            return ResourceDto.of((String) path, false);
+        }
+        return ResourceDto.of((String) path);
+    }
+
     public ResourceDto process(String session, Object path) {
         if (session == null) {
             return ResourceDto.of((String) path, false);
         }
+
         return ResourceDto.of((String) path);
     }
 

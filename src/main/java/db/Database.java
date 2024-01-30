@@ -43,4 +43,9 @@ public class Database {
     public static void addBoard(Board board) {
         boardDB.put(boardId++, board);
     }
+
+    public static Collection<Board> findAllBoards() {
+        return boardDB.values();
+    }
+
 }

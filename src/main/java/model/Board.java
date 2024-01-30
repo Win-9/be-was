@@ -23,4 +23,20 @@ public class Board {
             e.printStackTrace();
         }
     }
+
+    public String getWriter() {
+        return writer;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
 }
