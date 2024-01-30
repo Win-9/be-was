@@ -12,7 +12,6 @@ public class Board {
     private LocalDateTime createTime;
 
     public Board() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         this.createTime = LocalDateTime.now();
     }
 
@@ -25,6 +24,10 @@ public class Board {
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
+
+    public void changeEnterTag() {
+        this.contents = contents.replace("\r\n", "<br>");
     }
 
     public String getWriter() {

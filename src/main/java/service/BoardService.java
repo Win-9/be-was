@@ -26,6 +26,7 @@ public class BoardService {
             Board.setBoard(board, key, data.get(key));
         }
         Database.addBoard(board);
+        board.changeEnterTag();
         logger.debug("Board DataBase Size = {}", Database.findAllBoards().size());
         user.addBoard(board);
     }
