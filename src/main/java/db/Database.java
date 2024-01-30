@@ -41,6 +41,7 @@ public class Database {
 
     // Board
     public static void addBoard(Board board) {
+        board.setBoardId(boardId);
         boardDB.put(boardId++, board);
     }
 

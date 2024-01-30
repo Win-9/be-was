@@ -43,9 +43,8 @@ public class ResourceHandler {
                 bodyString = bodyString.replace("{{boardData}}","");
             } else {
                 for (Board board : boardList) {
-                    System.out.println("6");
                     bodyString = bodyString.replace("{{boardData}}",
-                            BoardContent.BOARD.getText(board.getTitle(), board.getFormattedCreateTime(), board.getWriter()));
+                            BoardContent.BOARD.getText(board.getId(), board.getTitle(), board.getFormattedCreateTime(), board.getWriter()));
                 }
             }
         }

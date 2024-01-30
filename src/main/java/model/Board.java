@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Board {
+    private long id;
     private String writer;
     private String title;
     private String contents;
@@ -42,8 +43,16 @@ public class Board {
         return createTime;
     }
 
+    public long getId() {
+        return id;
+    }
+
     public String getFormattedCreateTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return this.createTime.format(formatter);
+    }
+
+    public void setBoardId(long id) {
+        this.id = id;
     }
 }
