@@ -25,7 +25,8 @@ public class HtmlBuilder {
         if (resource.getPath().contains("/qna/show")) {
             Board board = (Board) Model.getAttribute("board").get();
             bodyString = bodyString.replace("{{boardDetail}}",
-                    BoardContent.BOARD_DEFAIL.getText(board.getTitle(), board.getFormattedCreateTime(), board.getContents()));
+                    BoardContent.BOARD_DEFAIL.getText(board.getTitle(),board.getWriter(),
+                            board.getFormattedCreateTime(), board.getContents()));
         }
         return bodyString;
     }

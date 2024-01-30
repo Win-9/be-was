@@ -31,7 +31,7 @@ public enum BoardContent {
             "                          <img src=\"https://graph.facebook.com/v2.3/100000059371774/picture\" class=\"article-author-thumb\" alt=\"\">\n" +
             "                      </div>\n" +
             "                      <div class=\"article-header-text\">\n" +
-            "                          <a href=\"/users/92/kimmunsu\" class=\"article-author-name\">kimmunsu</a>\n" +
+            "                          <a href=\"/users/92/kimmunsu\" class=\"article-author-name\">%s</a>\n" +
             "                          <a href=\"/questions/413\" class=\"article-header-time\" title=\"퍼머링크\">\n" +
             "                              %s\n" +
             "                              <i class=\"icon-link\"></i>\n" +
@@ -46,8 +46,8 @@ public enum BoardContent {
         this.text = text;
     }
 
-    public String getText(String title, String time, String contents) {
-        return String.format(text, title, time, contents);
+    public String getText(String title, String name, String time, String contents) {
+        return String.format(text, title, name, time, contents);
     }
 
     public String getText(long index, String title, String time, String username) {
