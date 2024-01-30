@@ -27,14 +27,16 @@ public class HtmlBuilder {
         if (resource.getPath().contains("/index.html")) {
             List<Board> boardList = (List<Board>) Model.getAttribute("boardList")
                     .orElse(Collections.emptyList());
+            System.out.println("size = " + boardList.size());
 
             if (boardList.size() == 0) {
                 bodyString = bodyString.replace("{{boardData}}","");
             } else {
+                StringBuilder sb = new StringBuilder();
                 for (Board board : boardList) {
-                    bodyString = bodyString.replace("{{boardData}}",
-                            BoardContent.BOARD.getText(board.getId(), board.getTitle(), board.getFormattedCreateTime(), board.getWriter()));
+                    sb.append(BoardContent.BOARD.getText(board.getId(), board.getTitle(), board.getFormattedCreateTime(), board.getWriter()));
                 }
+                bodyString = bodyString.replace("{{boardData}}", sb);
             }
         }
         return bodyString;
