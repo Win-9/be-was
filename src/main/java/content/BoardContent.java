@@ -7,7 +7,7 @@ public enum BoardContent {
                   "  <div class=\"wrap\">\n" +
                   "    <div class=\"main\">\n" +
                   "      <strong class=\"subject\">\n" +
-                  "        <a href=\"./qna/show.html\">%s</a>\n" +
+                  "        <a href=\"./qna/show?boardId=%d\">%s</a>\n" +
                   "      </strong>\n" +
                   "      <div class=\"auth-info\">\n" +
                   "        <i class=\"icon-add-comment\"></i>\n" +
@@ -20,14 +20,38 @@ public enum BoardContent {
                   "      </div>\n" +
                   "    </div>\n" +
                   "  </div>\n" +
-                  "</li>");
+                  "</li>"),
+    BOARD_DEFAIL("<header class=\"qna-header\">\n" +
+            "              <h2 class=\"qna-title\">%s</h2>\n" +
+            "          </header>\n" +
+            "          <div class=\"content-main\">\n" +
+            "              <article class=\"article\">\n" +
+            "                  <div class=\"article-header\">\n" +
+            "                      <div class=\"article-header-thumb\">\n" +
+            "                          <img src=\"https://graph.facebook.com/v2.3/100000059371774/picture\" class=\"article-author-thumb\" alt=\"\">\n" +
+            "                      </div>\n" +
+            "                      <div class=\"article-header-text\">\n" +
+            "                          <a href=\"/users/92/kimmunsu\" class=\"article-author-name\">kimmunsu</a>\n" +
+            "                          <a href=\"/questions/413\" class=\"article-header-time\" title=\"퍼머링크\">\n" +
+            "                              %s\n" +
+            "                              <i class=\"icon-link\"></i>\n" +
+            "                          </a>\n" +
+            "                      </div>\n" +
+            "                  </div>\n" +
+            "                  <div class=\"article-doc\">\n" +
+            "                      <p>%s</p>\n" +
+            "                  </div>");
     private String text;
     BoardContent(String text) {
         this.text = text;
     }
 
-    public String getText(String title, String time, String username) {
-        return String.format(text, title, time, username);
+    public String getText(String title, String time, String contents) {
+        return String.format(text, title, time, contents);
+    }
+
+    public String getText(long index, String title, String time, String username) {
+        return String.format(text, index, title, time, username);
     }
 
 }

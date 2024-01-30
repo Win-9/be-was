@@ -30,8 +30,18 @@ public class ResourceHandler {
         String bodyString = changeMenuHtmlFile(resource, bodyData);
         bodyString = changeUserListHtmlFile(resource, bodyString);
         bodyString = changeIndexHtmlFile(resource, bodyString);
+        bodyString = changeShowHtmlFile(resource, bodyString);
 
         return bodyString.getBytes();
+    }
+
+    private static String changeShowHtmlFile(ResourceDto resource, String bodyString) {
+        if (resource.getPath().contains("/qna/show")) {
+            Board board = (Board) Model.getAttribute("board").get();
+            bodyString = bodyString.replace("{{boardDetail}}",
+                    BoardContent.BOARD_DEFAIL.getText(board.getTitle(), board.getFormattedCreateTime(), board.getContents()));
+        }
+        return bodyString;
     }
 
     private static String changeIndexHtmlFile(ResourceDto resource, String bodyString) {

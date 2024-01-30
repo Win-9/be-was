@@ -1,10 +1,12 @@
 package service;
 
 import db.Database;
+import exception.SourceException;
 import model.Board;
 import model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import util.ErrorCode;
 import util.ParseParams;
 
 import java.util.List;
@@ -26,5 +28,15 @@ public class BoardService {
         Database.addBoard(board);
         logger.debug("Board DataBase Size = {}", Database.findAllBoards().size());
         user.addBoard(board);
+    }
+
+    public Board findBoard(ParseParams queryParams) {
+        Map<String, String> paramMap = queryParams.getParamMap();
+        long boardId = Long.parseLong(paramMap.get("boardId"));
+        Board board = Database.findBoardById(boardId);
+        if (board == null) {
+            throw new SourceException(ErrorCode.NOT_EXIST_BOARD);
+        }
+        return board;
     }
 }

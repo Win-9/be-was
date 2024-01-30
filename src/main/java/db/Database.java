@@ -49,4 +49,8 @@ public class Database {
         return boardDB.values();
     }
 
+    public static Board findBoardById(long boardId) {
+        return boardDB.get(boardId);
+    }
+
 }

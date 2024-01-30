@@ -25,6 +25,7 @@ public class FrontController {
         controllerMap.put("/user/list", new UserController());
         controllerMap.put("/write.html", new UserController());
         controllerMap.put("/write", new UserController());
+        controllerMap.put("/qna/show", new UserController());
     }
 
     public static CommonResponse service(HttpRequest httpRequest) throws IOException {
