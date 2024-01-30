@@ -27,10 +27,15 @@ public class UserController {
         methodMap.put("/write.html", this::processBoard);
         methodMap.put("/write", this::generateBoardResource);
         methodMap.put("/user/login", this::loginUserResource);
-        methodMap.put("/qna/show.html", this::process);
+        methodMap.put("/qna/show", this::generateBoardDetailResource);
         methodMap.put("/user/login_failed.html", this::process);
     }
 
+    public ResourceDto generateBoardDetailResource(String session, Object queryParams) {
+        Board board = boardService.findBoard((ParseParams) queryParams);
+        Model.addAttribute("board", board);
+        return ResourceDto.of("/qna/show.html");
+    }
     public ResourceDto generateBoardResource(String session, Object bodyData) {
         if (session == null) {
             return ResourceDto.of("/user/login.html", 302, false);
@@ -91,7 +96,10 @@ public class UserController {
 
     public BiFunction<String, Object, ResourceDto> getCorrectMethod(String path) {
         for (String key : methodMap.keySet()) {
-            if (path.matches(key)) {
+            if (path.contains(key) && path.contains("?")) {
+                return methodMap.get(key);
+            }
+            else if (path.matches(key)) {
                 return methodMap.get(key);
             }
         }
