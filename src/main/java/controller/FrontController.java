@@ -14,29 +14,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FrontController {
-    private static Map<String, UserController> controllerMap = new HashMap<>();
+    private static Map<String, Controller> controllerMap = new HashMap<>();
 
     static {
+        // userController 매핑
         controllerMap.put("/user/create", new UserController());
         controllerMap.put("/index.html", new UserController());
         controllerMap.put("/user/form.html", new UserController());
         controllerMap.put("/user/login.html", new UserController());
         controllerMap.put("/user/login", new UserController());
         controllerMap.put("/user/list", new UserController());
-        controllerMap.put("/write.html", new UserController());
-        controllerMap.put("/write", new UserController());
-        controllerMap.put("/qna/show", new UserController());
+
+        // BoardController 매핑
+        controllerMap.put("/write.html", new BoardController());
+        controllerMap.put("/write", new BoardController());
+        controllerMap.put("/qna/show", new BoardController());
     }
 
     public static CommonResponse service(HttpRequest httpRequest) throws IOException {
         // controller Mapping
-        UserController controller = getController(httpRequest.getRequestHeader().getPath());
+        Controller controller = getController(httpRequest.getRequestHeader().getPath());
         CommonResponse response = getResponse(httpRequest.getRequestHeader(), httpRequest.getBody(), controller);
         response.setPath(response.getPath());
         return response;
     }
 
-    private static CommonResponse getResponse(RequestHeader requestHeader, String body, UserController controller) {
+    private static CommonResponse getResponse(RequestHeader requestHeader, String body, Controller controller) {
         CommonResponse response = null;
         try {
             ResourceDto resource = PathHandler.responseResource(requestHeader, body, controller);
@@ -49,7 +52,7 @@ public class FrontController {
         }
     }
 
-    private static UserController getController(String path) {
+    private static Controller getController(String path) {
         for (String key : controllerMap.keySet()) {
             if (path.startsWith(key)) {
                 return controllerMap.get(key);

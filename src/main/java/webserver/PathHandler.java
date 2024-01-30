@@ -1,6 +1,6 @@
 package webserver;
 
-import controller.UserController;
+import controller.Controller;
 import dto.ResourceDto;
 import util.ParseParams;
 
@@ -8,7 +8,7 @@ import java.util.function.BiFunction;
 
 public class PathHandler {
 
-    public static ResourceDto responseResource(RequestHeader requestHeader, String body, UserController controller) {
+    public static ResourceDto responseResource(RequestHeader requestHeader, String body, Controller controller) {
         String method = requestHeader.getMethod();
         String path = requestHeader.getPath();
         String cookie = requestHeader.getCookie();
