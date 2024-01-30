@@ -32,6 +32,7 @@ public class BoardController implements Controller{
         Model.addAttribute("board", board);
         return ResourceDto.of("/qna/show.html");
     }
+
     public ResourceDto generateBoardResource(String session, Object bodyData) {
         if (session == null) {
             return ResourceDto.of("/user/login.html", 302, false);

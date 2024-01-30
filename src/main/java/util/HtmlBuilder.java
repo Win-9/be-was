@@ -11,6 +11,16 @@ import java.util.Collections;
 import java.util.List;
 
 public class HtmlBuilder {
+
+    public static String changeProfileHtmlFile(ResourceDto resource, String bodyString) {
+        if (resource.getPath().contains("/user/profile")) {
+            User user = (User) Model.getAttribute("user").get();
+            bodyString = bodyString.replace("{{profileData}}",
+                    UserContent.USER_PROFILE.getText(user.getName(), user.getEmail()));
+        }
+        return bodyString;
+    }
+
     public static String changeShowHtmlFile(ResourceDto resource, String bodyString) {
         if (resource.getPath().contains("/qna/show")) {
             Board board = (Board) Model.getAttribute("board").get();

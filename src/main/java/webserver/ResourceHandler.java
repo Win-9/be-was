@@ -26,6 +26,7 @@ public class ResourceHandler {
         bodyString = HtmlBuilder.changeUserListHtmlFile(resource, bodyString);
         bodyString = HtmlBuilder.changeIndexHtmlFile(resource, bodyString);
         bodyString = HtmlBuilder.changeShowHtmlFile(resource, bodyString);
+        bodyString = HtmlBuilder.changeProfileHtmlFile(resource, bodyString);
 
         return bodyString.getBytes();
     }
