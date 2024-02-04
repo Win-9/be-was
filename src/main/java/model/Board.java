@@ -1,8 +1,11 @@
 package model;
 
+import java.awt.*;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Board {
     private long id;
@@ -10,6 +13,7 @@ public class Board {
     private String title;
     private String contents;
     private LocalDateTime createTime;
+    private List<Comment> commentList = new ArrayList<>();
 
     public Board() {
         this.createTime = LocalDateTime.now();
@@ -42,10 +46,6 @@ public class Board {
         return contents;
     }
 
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
     public long getId() {
         return id;
     }
@@ -57,5 +57,13 @@ public class Board {
 
     public void setBoardId(long id) {
         this.id = id;
+    }
+
+    public List<Comment> getCommentList() {
+        return commentList;
+    }
+
+    public void addComment(Comment comment) {
+        this.commentList.add(comment);
     }
 }

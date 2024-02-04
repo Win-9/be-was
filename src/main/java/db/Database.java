@@ -3,6 +3,7 @@ package db;
 import com.google.common.collect.Maps;
 
 import model.Board;
+import model.Comment;
 import model.User;
 import util.Session;
 
@@ -12,10 +13,12 @@ import java.util.Map;
 
 public class Database {
     private static long boardId = 1;
+    private static long commentId = 1;
+
     private static Map<String, User> users = Maps.newHashMap();
     private static Map<String, Session> sessoinDB = Maps.newConcurrentMap();
     private static Map<Long, Board> boardDB = Maps.newConcurrentMap();
-
+    private static Map<Long, Comment> commentDB = Maps.newConcurrentMap();
 
     // User
     public static void addUser(User user) {
@@ -57,4 +60,14 @@ public class Database {
         return boardDB.get(boardId);
     }
 
+
+    // Commnet
+    public static void addComment(Comment comment) {
+        comment.setContentId(commentId);
+        commentDB.put(commentId++, comment);
+    }
+
+    public static Collection<Comment> findAllComments() {
+        return commentDB.values();
+    }
 }

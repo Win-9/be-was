@@ -30,6 +30,7 @@ public class FrontController {
         // BoardController 매핑
         controllerMap.put("/write.html", new BoardController());
         controllerMap.put("/write", new BoardController());
+        controllerMap.put("/board/comment", new BoardController());
         controllerMap.put("/qna/show", new BoardController());
     }
 
@@ -48,7 +49,7 @@ public class FrontController {
             byte[] bodyData = ResourceHandler.resolveResource(resource);
             response = CommonResponse.onOk(resource.getHttpStatus(), bodyData, resource.getExtension(), resource.getPath());
         } catch (SourceException e) {
-            response = ExceptionHandler.handleGeneralException(e);
+            response = ExceptionHandler.handleGeneralException(e, ResourceDto.of("/error.html", 404));
         } finally {
             return response;
         }
