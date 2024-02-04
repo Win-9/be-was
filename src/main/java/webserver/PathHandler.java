@@ -13,16 +13,22 @@ public class PathHandler {
         String path = requestHeader.getPath();
         String cookie = requestHeader.getCookie();
 
-
         if (controller != null) {
             BiFunction<String, Object, ResourceDto> correctMethod = controller.getCorrectMethod(path);
-            if (method.equals("POST")) {
+            if (method.equals("POST") && path.contains("?")) {
+                String[] splits = path.split("\\?");
+                ParseParams queryParam = ParseParams.from(body, splits[1]);
+
+                return correctMethod.apply(cookie, queryParam);
+            } else if (method.equals("POST")) {
                 ParseParams queryParam = ParseParams.from(body);
+
                 return correctMethod.apply(cookie, queryParam);
             }
             else if (method.equals("GET") && path.contains("?")) {
                 String[] splits = path.split("\\?");
                 ParseParams parseParams = ParseParams.from(splits[1]);
+
                 return correctMethod.apply(cookie, parseParams);
             } else if (method.equals("GET")) {
                 return correctMethod.apply(cookie, path);
