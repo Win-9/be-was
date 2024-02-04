@@ -5,7 +5,7 @@ public enum UserContent {
             "<li><a href=\"../user/login.html\" role=\"button\">로그인</a></li>"),
     LOGIN("<li><a href=\"../user/logout\" role=\"button\">로그아웃</a></li>\n" +
             "<li><a href=\"#\" role=\"button\">%s 님</a></li>\n" +
-            "<li><a href=\"../user/profile.html\" role=\"button\">개인정보 수정</a></li>\n"),
+            "<li><a href=\"../user/profile.html\" role=\"button\">개인정보</a></li>\n"),
     USER_PROFILE("<div class=\"media\">\n" +
             "                        <a class=\"thumbnail pull-left\" href=\"#\">\n" +
             "                            <img class=\"media-object\" src=\"../images/80-text.png\">\n" +
