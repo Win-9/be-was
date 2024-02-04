@@ -28,6 +28,8 @@ public class ResourceHandler {
         bodyString = HtmlBuilder.changeShowHtmlFile(resource, bodyString);
         bodyString = HtmlBuilder.changeProfileHtmlFile(resource, bodyString);
 
+
+
         return bodyString.getBytes();
     }
 
@@ -49,5 +51,17 @@ public class ResourceHandler {
             throw new SourceException(ErrorCode.NOT_VALID_PATH);
         }
         return resource.getPath();
+    }
+
+    public static byte[] getErrorResource(ResourceDto resource, String message) throws IOException {
+        String resourcePath = getResourcePath(resource.getPath());
+        FileInputStream fis = new FileInputStream(resourcePath);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        byte[] bodyData = changeFileToByte(fis, bos);
+        String bodyString = new String(bodyData);
+
+        bodyString = bodyString.replace("{{errormessage}}", "<p>" + message + "</p>");
+
+        return bodyString.getBytes();
     }
 }

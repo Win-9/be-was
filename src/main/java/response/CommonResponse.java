@@ -45,7 +45,7 @@ public class CommonResponse {
         return new CommonResponse(httpStatus, body, extension, path);
     }
 
-    public static CommonResponse onFail(HttpStatus httpStatus, String message){
-        return new CommonResponse(httpStatus, message.getBytes());
+    public static CommonResponse onFail(HttpStatus httpStatus, byte[] message){
+        return new CommonResponse(httpStatus, message);
     }
 }
