@@ -30,6 +30,12 @@ public class UserController implements Controller{
         methodMap.put("/user/logout", this::generateLogoutResource);
     }
 
+    /**
+     * @GET
+     * User Logout
+     * @param session
+     * @param path
+     */
     public ResourceDto generateLogoutResource(String session, Object path) {
         if (session == null) {
             return ResourceDto.ofWithStatusAndNoLogin("/user/login.html", 302, false);
@@ -39,6 +45,12 @@ public class UserController implements Controller{
         return ResourceDto.ofWithStatusAndNoLogin("/index.html", 302,false);
     }
 
+    /**
+     * @GET
+     * User MyProfile
+     * @param session
+     * @param path
+     */
     public ResourceDto generateUserProfileResource(String session, Object path) {
         if (session == null) {
             return ResourceDto.ofWithStatusAndNoLogin("/user/login.html", 302, false);
@@ -48,6 +60,12 @@ public class UserController implements Controller{
         return ResourceDto.of((String) path);
     }
 
+    /**
+     * @GET
+     * User List
+     * @param session
+     * @param path
+     */
     public ResourceDto generateUserListResource(String session, Object path) {
         if (session == null) {
             return ResourceDto.ofWithStatusAndNoLogin("/user/login.html", 302, false);
@@ -57,6 +75,12 @@ public class UserController implements Controller{
         return ResourceDto.of((String) path);
     }
 
+    /**
+     * @POST
+     * User Login
+     * @param session
+     * @param bodyData
+     */
     public ResourceDto loginUserResource(String session, Object bodyData) {
         String sessionId = userService.loginUser((ParseParams) bodyData);
         if (sessionId == null) {
@@ -68,11 +92,23 @@ public class UserController implements Controller{
         return ResourceDto.ofWithStatus("/index.html", 302);
     }
 
+    /**
+     * @POST
+     * User Create
+     * @param session
+     * @param queryParams
+     */
     public ResourceDto generateUserResource(String session, Object queryParams) {
         userService.createUser((ParseParams) queryParams);
         return ResourceDto.ofWithStatusAndNoLogin("/index.html", 302, false);
     }
 
+    /**
+     * @GET
+     * Load Main Page
+     * @param session
+     * @param path
+     */
     public ResourceDto processIndexResource(String session, Object path) {
         List<Board> boardList = boardService.findAllBoard();
         Model.addAttribute("boardList", boardList);
@@ -82,6 +118,13 @@ public class UserController implements Controller{
         return ResourceDto.of((String) path);
     }
 
+    /**
+     * @GET
+     * Load Static Page
+     * Page: form.html, login.html
+     * @param session
+     * @param path
+     */
     public ResourceDto process(String session, Object path) {
         if (session == null) {
             return ResourceDto.ofWithNoLogin((String) path, false);

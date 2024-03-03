@@ -28,7 +28,7 @@ public class HtmlBuilder {
         if (resource.getPath().contains("/qna/show")) {
             board = (Board) Model.getAttribute("board").get();
             bodyString = bodyString.replace("{{boardDetail}}",
-                    BoardContent.BOARD_DEFAIL.getText(board.getTitle(),board.getWriter(),
+                    BoardContent.BOARD_DETAIL.getText(board.getTitle(),board.getWriter(),
                             board.getFormattedCreateTime(), board.getContents()));
         }
 
@@ -93,9 +93,8 @@ public class HtmlBuilder {
         return bodyString;
     }
 
-    public static String changeMenuHtmlFile(ResourceDto resource, byte[] bodyData) {
+    public static String changeMenuHtmlFile(ResourceDto resource, String bodyString) {
         // 메뉴 바 변환
-        String bodyString = new String(bodyData);
         if (resource.isLoggined()) {
             bodyString = bodyString.replace("{{menu}}",
                     UserContent.LOGIN.getText(String.valueOf(Model.getAttribute("username").get())));

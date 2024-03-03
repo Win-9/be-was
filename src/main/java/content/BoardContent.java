@@ -1,7 +1,5 @@
 package content;
 
-import java.time.LocalDateTime;
-
 public enum BoardContent {
     BOARD("<li>\n" +
                   "  <div class=\"wrap\">\n" +
@@ -21,7 +19,7 @@ public enum BoardContent {
                   "    </div>\n" +
                   "  </div>\n" +
                   "</li>"),
-    BOARD_DEFAIL("<header class=\"qna-header\">\n" +
+    BOARD_DETAIL("<header class=\"qna-header\">\n" +
             "              <h2 class=\"qna-title\">%s</h2>\n" +
             "          </header>\n" +
             "          <div class=\"content-main\">\n" +
