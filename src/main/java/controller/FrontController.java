@@ -49,7 +49,7 @@ public class FrontController {
             byte[] bodyData = ResourceHandler.resolveResource(resource);
             response = CommonResponse.onOk(resource.getHttpStatus(), bodyData, resource.getExtension(), resource.getPath());
         } catch (SourceException e) {
-            response = ExceptionHandler.handleGeneralException(e, ResourceDto.of("/error.html", 404));
+            response = ExceptionHandler.handleGeneralException(e, ResourceDto.ofWithStatus("/error.html", 404));
         } finally {
             return response;
         }

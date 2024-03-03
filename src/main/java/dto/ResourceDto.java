@@ -31,18 +31,18 @@ public class ResourceDto {
         return new ResourceDto(path);
     }
 
-    public static ResourceDto of(String path, int status) {
+    public static ResourceDto ofWithStatus(String path, int status) {
         HttpStatus httpStatus = HttpStatus.findByStatusCode(status);
         return new ResourceDto(path, httpStatus);
     }
 
-    public static ResourceDto of(String path, boolean isloggined) {
-        return new ResourceDto(path, isloggined);
+    public static ResourceDto ofWithNoLogin(String path, boolean isLoggined) {
+        return new ResourceDto(path, isLoggined);
     }
 
-    public static ResourceDto of(String path, int status, boolean islogin) {
+    public static ResourceDto ofWithStatusAndNoLogin(String path, int status, boolean isLoggined) {
         HttpStatus httpStatus = HttpStatus.findByStatusCode(status);
-        return new ResourceDto(path, httpStatus, islogin);
+        return new ResourceDto(path, httpStatus, isLoggined);
     }
 
     public String getPath() {

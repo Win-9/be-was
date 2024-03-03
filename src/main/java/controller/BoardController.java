@@ -29,19 +29,19 @@ public class BoardController implements Controller{
 
     public ResourceDto generateCommentResource(String session, Object bodyData) {
         if (session == null) {
-            return ResourceDto.of("/user/login.html", 302, false);
+            return ResourceDto.ofWithStatusAndNoLogin("/user/login.html", 302, false);
         }
         Board board = boardService.findBoard((ParseParams) bodyData);
         User user = userService.findUserWithSession(session);
         commentService.createComment(user, board, (ParseParams) bodyData);
         Model.addAttribute("board", board);
         Model.addAttribute("commentList", board.getCommentList());
-        return ResourceDto.of("/index.html", 302);
+        return ResourceDto.ofWithStatus("/index.html", 302);
     }
 
     public ResourceDto generateBoardDetailResource(String session, Object queryParams) {
         if (session == null) {
-            return ResourceDto.of("/user/login.html", 302, false);
+            return ResourceDto.ofWithStatusAndNoLogin("/user/login.html", 302, false);
         }
         Board board = boardService.findBoard((ParseParams) queryParams);
         Model.addAttribute("board", board);
@@ -51,16 +51,16 @@ public class BoardController implements Controller{
 
     public ResourceDto generateBoardResource(String session, Object bodyData) {
         if (session == null) {
-            return ResourceDto.of("/user/login.html", 302, false);
+            return ResourceDto.ofWithStatusAndNoLogin("/user/login.html", 302, false);
         }
         User user = userService.findUserWithSession(session);
         boardService.createBoard(user, (ParseParams)bodyData);
-        return ResourceDto.of("/index.html", 302);
+        return ResourceDto.ofWithStatus("/index.html", 302);
     }
 
     public ResourceDto processBoard(String session, Object path) {
         if (session == null) {
-            return ResourceDto.of("/user/login.html", 302,false);
+            return ResourceDto.ofWithStatusAndNoLogin("/user/login.html", 302,false);
         }
         return ResourceDto.of((String) path);
     }

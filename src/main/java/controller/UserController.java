@@ -32,16 +32,16 @@ public class UserController implements Controller{
 
     public ResourceDto generateLogoutResource(String session, Object path) {
         if (session == null) {
-            return ResourceDto.of("/user/login.html", 302, false);
+            return ResourceDto.ofWithStatusAndNoLogin("/user/login.html", 302, false);
         }
         userService.removeSession(session);
         Model.removeAttribute("sessionId");
-        return ResourceDto.of("/index.html", 302,false);
+        return ResourceDto.ofWithStatusAndNoLogin("/index.html", 302,false);
     }
 
     public ResourceDto generateUserProfileResource(String session, Object path) {
         if (session == null) {
-            return ResourceDto.of("/user/login.html", 302, false);
+            return ResourceDto.ofWithStatusAndNoLogin("/user/login.html", 302, false);
         }
         User user = userService.findUserWithSession(session);
         Model.addAttribute("user", user);
@@ -50,7 +50,7 @@ public class UserController implements Controller{
 
     public ResourceDto generateUserListResource(String session, Object path) {
         if (session == null) {
-            return ResourceDto.of("/user/login.html", 302, false);
+            return ResourceDto.ofWithStatusAndNoLogin("/user/login.html", 302, false);
         }
         List<User> userList = userService.findAllUser();
         Model.addAttribute("userList", userList);
@@ -60,31 +60,31 @@ public class UserController implements Controller{
     public ResourceDto loginUserResource(String session, Object bodyData) {
         String sessionId = userService.loginUser((ParseParams) bodyData);
         if (sessionId == null) {
-            return ResourceDto.of("/user/login_failed.html", 302, false);
+            return ResourceDto.ofWithStatusAndNoLogin("/user/login_failed.html", 302, false);
         }
         User user = userService.findUserWithSession(sessionId);
         Model.addAttribute("sessionId", sessionId);
         Model.addAttribute("username", user.getName());
-        return ResourceDto.of("/index.html", 302);
+        return ResourceDto.ofWithStatus("/index.html", 302);
     }
 
     public ResourceDto generateUserResource(String session, Object queryParams) {
         userService.createUser((ParseParams) queryParams);
-        return ResourceDto.of("/index.html", 302, false);
+        return ResourceDto.ofWithStatusAndNoLogin("/index.html", 302, false);
     }
 
     public ResourceDto processIndexResource(String session, Object path) {
         List<Board> boardList = boardService.findAllBoard();
         Model.addAttribute("boardList", boardList);
         if (session == null) {
-            return ResourceDto.of((String) path, false);
+            return ResourceDto.ofWithNoLogin((String) path, false);
         }
         return ResourceDto.of((String) path);
     }
 
     public ResourceDto process(String session, Object path) {
         if (session == null) {
-            return ResourceDto.of((String) path, false);
+            return ResourceDto.ofWithNoLogin((String) path, false);
         }
 
         return ResourceDto.of((String) path);
