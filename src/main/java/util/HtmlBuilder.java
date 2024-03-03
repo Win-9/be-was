@@ -96,7 +96,7 @@ public class HtmlBuilder {
     public static String changeMenuHtmlFile(ResourceDto resource, byte[] bodyData) {
         // 메뉴 바 변환
         String bodyString = new String(bodyData);
-        if (resource.isIsloggined()) {
+        if (resource.isLoggined()) {
             bodyString = bodyString.replace("{{menu}}",
                     UserContent.LOGIN.getText(String.valueOf(Model.getAttribute("username").get())));
         } else {

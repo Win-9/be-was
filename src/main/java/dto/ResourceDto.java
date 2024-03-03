@@ -5,7 +5,7 @@ import util.HttpStatus;
 public class ResourceDto {
     private String path;
     private HttpStatus httpStatus = HttpStatus.OK;
-    private boolean isloggined = true;
+    private boolean isLoggined = true;
 
     public ResourceDto(String path) {
         this.path = path;
@@ -16,15 +16,15 @@ public class ResourceDto {
         this.httpStatus = httpStatus;
     }
 
-    public ResourceDto(String path, boolean isloggined) {
+    public ResourceDto(String path, boolean isLoggined) {
         this.path = path;
-        this.isloggined = isloggined;
+        this.isLoggined = isLoggined;
     }
 
-    public ResourceDto(String path, HttpStatus httpStatus, boolean isloggined) {
+    public ResourceDto(String path, HttpStatus httpStatus, boolean isLoggined) {
         this.path = path;
         this.httpStatus = httpStatus;
-        this.isloggined = isloggined;
+        this.isLoggined = isLoggined;
     }
 
     public static ResourceDto of(String path) {
@@ -58,7 +58,7 @@ public class ResourceDto {
         return path.substring(dotIndex + 1);
     }
 
-    public boolean isIsloggined() {
-        return isloggined;
+    public boolean isLoggined() {
+        return isLoggined;
     }
 }
