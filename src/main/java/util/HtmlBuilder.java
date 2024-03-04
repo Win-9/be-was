@@ -8,8 +8,7 @@ import model.Comment;
 import model.Model;
 import model.User;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class HtmlBuilder {
 
@@ -17,19 +16,41 @@ public class HtmlBuilder {
         // 프로필 변환
         if (resource.getPath().contains("/user/profile")) {
             User user = (User) Model.getAttribute("user").get();
-            bodyString = bodyString.replace("{{profileData}}",
-                    UserContent.USER_PROFILE.getText(user.getName(), user.getEmail()));
+            int start = bodyString.indexOf("<!--postStart-->");
+            int end = bodyString.indexOf("<!--postEnd-->");
+            String itemTemplate = bodyString.substring(start, end);
+
+            String listItem = itemTemplate.replace("{{userName}}", user.getName())
+                    .replace("{{userEmail}}", user.getEmail());
+            listItem = replaceHeadline(listItem, "postStart");
+
+            bodyString = bodyString.substring(0, start) + listItem + bodyString.substring(end);
         }
         return bodyString;
+    }
+
+    private static String replaceHeadline(String listItem, String headLine) {
+        listItem = removeAnnotationSymbols(listItem);
+        listItem = listItem.replace(headLine, "");
+        return listItem;
     }
 
     public static String changeShowHtmlFile(ResourceDto resource, String bodyString) {
         Board board = null;
         if (resource.getPath().contains("/qna/show")) {
+            // 게시글 세부사항 동적 변환
             board = (Board) Model.getAttribute("board").get();
-            bodyString = bodyString.replace("{{boardDetail}}",
-                    BoardContent.BOARD_DETAIL.getText(board.getTitle(),board.getWriter(),
-                            board.getFormattedCreateTime(), board.getContents()));
+            int start = bodyString.indexOf("<!--postStart-->");
+            int end = bodyString.indexOf("<!--postEnd-->");
+            String itemTemplate = bodyString.substring(start, end);
+
+            String listItem = itemTemplate.replace("{{title}}", board.getTitle())
+                    .replace("{{author}}", board.getWriter())
+                    .replace("{{writeTime}}", board.getFormattedCreateTime())
+                    .replace("{{content}}", board.getContents());
+            listItem = replaceHeadline(listItem, "postStart");
+
+            bodyString = bodyString.substring(0, start) + listItem + bodyString.substring(end);
         }
 
         if (resource.getPath().contains("/qna/show")) {
@@ -41,16 +62,23 @@ public class HtmlBuilder {
                     BoardContent.BOARD_COUNT.getText(commentList.size()));
 
             // 댓글 동적 변환
-            if (commentList.size() == 0) {
-                bodyString = bodyString.replace("{{commentData}}","");
-            } else {
-                StringBuilder sb = new StringBuilder();
-                for (Comment comment : commentList) {
-                    sb.append(BoardContent.BOARD_COMMENT.getText(comment.getWriter(), comment.getFormattedCreateTime(),
-                            comment.getContents()));
-                }
-                bodyString = bodyString.replace("{{commentData}}", sb);
+            int start = bodyString.indexOf("<!--forStart-->");
+            int end = bodyString.indexOf("<!--forEnd-->");
+            String itemTemplate = bodyString.substring(start, end);
+
+            StringBuilder itemHtml = new StringBuilder();
+            for (Comment comment : commentList) {
+                String listItem = itemTemplate.replace("{{bordId}}", String.valueOf(comment.getId()))
+                        .replace("{{writer}}", comment.getWriter())
+                        .replace("{{writeTime}}", comment.getFormattedCreateTime())
+                        .replace("{{content}}", comment.getContents())
+                        .replace("{{commentCount}}", String.valueOf(Optional.ofNullable(commentList)
+                                .orElse(Collections.emptyList()).size()));
+                listItem = replaceHeadline(listItem, "forStart");
+
+                itemHtml.append(listItem);
             }
+            bodyString = bodyString.substring(0, start) + itemHtml + bodyString.substring(end);
 
             // 댓글 쓰기
             bodyString = bodyString.replace("{{form}}",BoardContent.COMMENT_FORM.getText(board.getId()));
@@ -65,16 +93,22 @@ public class HtmlBuilder {
             List<Board> boardList = (List<Board>) Model.getAttribute("boardList")
                     .orElse(Collections.emptyList());
 
-            if (boardList.size() == 0) {
-                bodyString = bodyString.replace("{{boardData}}","");
-            } else {
-                StringBuilder sb = new StringBuilder();
-                for (Board board : boardList) {
-                    sb.append(BoardContent.BOARD.getText(board.getId(), board.getTitle()
-                            , board.getFormattedCreateTime(), board.getWriter(), board.getId()));
-                }
-                bodyString = bodyString.replace("{{boardData}}", sb);
+            int start = bodyString.indexOf("<!--forStart-->");
+            int end = bodyString.indexOf("<!--forEnd-->");
+            String itemTemplate = bodyString.substring(start, end);
+
+            StringBuilder itemHtml = new StringBuilder();
+            for (Board board : boardList) {
+                String listItem = itemTemplate.replace("{{bordId}}", String.valueOf(board.getId()))
+                        .replace("{{boardTitle}}", board.getTitle())
+                        .replace("{{writeTime}}", board.getFormattedCreateTime())
+                        .replace("{{author}}", board.getWriter())
+                        .replace("{{commentCount}}", String.valueOf(board.getCommentList().size()));
+                listItem = replaceHeadline(listItem, "forStart");
+
+                itemHtml.append(listItem);
             }
+            bodyString = bodyString.substring(0, start) + itemHtml + bodyString.substring(end);
         }
         return bodyString;
     }
@@ -103,6 +137,12 @@ public class HtmlBuilder {
                     UserContent.NON_LOGIN.getText());
         }
         return bodyString;
+    }
+
+    private static String removeAnnotationSymbols(String line) {
+        line = line.replace("<!--", "");
+        line = line.replace("-->", "");
+        return line;
     }
 
 }
